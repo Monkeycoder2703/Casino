@@ -531,15 +531,25 @@ function renderHSList(list,elId){
 }
 /* ── SUPABASE CONFIG ── */
 const SB_URL='https://teabhirdufkiimjiwtvs.supabase.co';
-const SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRlYWJoaXJkdWZraWltaml3dHZzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODMzMzkyMDAsImV4cCI6MjA5ODkxNTIwMH0.XpZ_d2eaJL0KqlGyMyZeGib0jfY5CKgGysczz6AEsKE';
+const SB_KEY='sb_publishable_e-LD20U6keFcMn7AJKkGTg_v8yshbJi';
 
 async function sbFetch(path,opts={}){
-  const res=await fetch(SB_URL+'/rest/v1/'+path,{
-    headers:{'apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY,'Content-Type':'application/json','Prefer':'return=minimal',...(opts.headers||{})},
-    ...opts
-  });
-  if(opts.method==='POST')return res.ok;
-  return res.ok?res.json():[];
+  const headers={
+    'apikey':SB_KEY,
+    'Authorization':'Bearer '+SB_KEY,
+    'Content-Type':'application/json',
+    'Accept':'application/json',
+    'Prefer': opts.method==='POST' ? 'return=minimal' : 'count=none',
+  };
+  if(opts.headers) Object.assign(headers,opts.headers);
+  const res=await fetch(SB_URL+'/rest/v1/'+path,{...opts,headers});
+  if(!res.ok){
+    const txt=await res.text();
+    console.error('Supabase error',res.status,txt);
+    return opts.method==='POST'?false:[];
+  }
+  if(opts.method==='POST')return true;
+  try{return await res.json();}catch(e){return [];}
 }
 
 async function addToHS(key,name,score,game){
@@ -862,9 +872,15 @@ rBuildNumGrid();rUpdateDisplay();rRenderBets();
 bjDeck=bjBuildDeck();bjUpdateDisplay();
 // Load highscores from Supabase on startup
 (async()=>{
-  await loadAndRenderHS('r-hs-list','Roulette');
-  await loadAndRenderHS('bj-hs-list','Blackjack');
-  await renderMenuHS();
+  console.log('🎰 Casino: Verbinde mit Supabase...');
+  try {
+    await loadAndRenderHS('r-hs-list','Roulette');
+    await loadAndRenderHS('bj-hs-list','Blackjack');
+    await renderMenuHS();
+    console.log('✅ Supabase verbunden!');
+  } catch(e) {
+    console.error('❌ Supabase Fehler:', e);
+  }
 })();
 </script>
 </body>
