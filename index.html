@@ -531,17 +531,15 @@ function renderHSList(list,elId){
 }
 /* ── SUPABASE CONFIG ── */
 const SB_URL='https://teabhirdufkiimjiwtvs.supabase.co';
-const SB_KEY='sb_publishable_e-LD20U6keFcMn7AJKkGTg_v8yshbJi';
+const SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRlYWJoaXJkdWZraWltaml3dHZzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODMzMzkyMDAsImV4cCI6MjA5ODkxNTIwMH0.XpZ_d2eaJL0KqlGyMyZeGib0jfY5CKgGysczz6AEsKE';
 
 async function sbFetch(path,opts={}){
   const headers={
     'apikey':SB_KEY,
     'Authorization':'Bearer '+SB_KEY,
     'Content-Type':'application/json',
-    'Accept':'application/json',
-    'Prefer': opts.method==='POST' ? 'return=minimal' : 'count=none',
   };
-  if(opts.headers) Object.assign(headers,opts.headers);
+  if(opts.method==='POST') headers['Prefer']='return=minimal';
   const res=await fetch(SB_URL+'/rest/v1/'+path,{...opts,headers});
   if(!res.ok){
     const txt=await res.text();
@@ -561,14 +559,14 @@ async function addToHS(key,name,score,game){
 }
 
 async function loadAndRenderHS(elId, game){
-  const data=await sbFetch(`highscores?game=eq.${encodeURIComponent(game)}&order=score.desc&limit=10`,{headers:{'Range':'0-9'}});
+  const data=await sbFetch(`highscores?game=eq.${encodeURIComponent(game)}&order=score.desc&limit=10`);
   const list=Array.isArray(data)?data:[];
   renderHSList(list.map(r=>({name:r.name,score:r.score,game:r.game,date:new Date(r.created_at).toLocaleDateString('de-DE')})),elId);
   return list;
 }
 
 async function renderMenuHS(){
-  const data=await sbFetch('highscores?order=score.desc&limit=10',{headers:{'Range':'0-9'}});
+  const data=await sbFetch('highscores?order=score.desc&limit=10');
   const list=Array.isArray(data)?data:[];
   renderHSList(list.map(r=>({name:r.name,score:r.score,game:r.game,date:new Date(r.created_at).toLocaleDateString('de-DE')})),'menu-hs-list');
 }
