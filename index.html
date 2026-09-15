@@ -153,7 +153,7 @@ input:focus{border-color:var(--neon-gold);box-shadow:0 0 10px rgba(255,215,0,.25
 /* modals */
 .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);backdrop-filter:blur(4px);align-items:center;justify-content:center;z-index:200}
 .modal-overlay.show{display:flex}
-.modal-box{background:var(--bg-card2);border-radius:var(--radius-lg);border:1px solid var(--border-gold2);padding:2rem;width:320px;text-align:center;box-shadow:0 0 40px rgba(255,215,0,.15);position:relative;overflow:hidden}
+.modal-box{background:var(--bg-card2);border-radius:var(--radius-lg);border:1px solid var(--border-gold2);padding:2rem;width:360px;text-align:center;box-shadow:0 0 40px rgba(255,215,0,.15);position:relative;overflow:hidden}
 .modal-box::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--neon-gold),transparent);box-shadow:0 0 15px rgba(255,215,0,.6)}
 .mod-title{font-size:22px;font-weight:700;font-family:'Oswald',sans-serif;letter-spacing:.08em;color:var(--neon-gold);text-shadow:0 0 10px rgba(255,215,0,.4);margin-bottom:.4rem}
 .mod-sub{font-size:13px;color:var(--txt2);margin-bottom:1.1rem;line-height:1.5}
@@ -483,6 +483,11 @@ input:focus{border-color:var(--neon-gold);box-shadow:0 0 10px rgba(255,215,0,.25
 <div class="modal-overlay" id="r-gameover-modal">
   <div class="modal-box">
     <div class="mod-title" style="color:var(--neon-red)">Pleite! 😬</div>
+    <div style="margin-bottom:1rem;border-radius:10px;overflow:hidden">
+  <div class="tenor-gif-embed" data-postid="4830100195523146323" data-share-method="host" data-aspect-ratio="1" data-width="100%">
+    <a href="https://tenor.com/view/ohnepixel-hobby-gamba-csgo-ohne-gif-4830100195523146323">Ohnepixel Hobby GIF</a>
+  </div>
+</div>
     <div class="mod-sub">Du hast alles verloren.</div>
     <input class="mod-inp" type="text" id="r-go-name" placeholder="Dein Name (optional)" maxlength="20"/>
     <button class="mod-btn" onclick="rSaveAndRestart()">Eintragen & neu starten</button>
@@ -501,6 +506,11 @@ input:focus{border-color:var(--neon-gold);box-shadow:0 0 10px rgba(255,215,0,.25
 <div class="modal-overlay" id="bj-gameover-modal">
   <div class="modal-box">
     <div class="mod-title" style="color:var(--neon-red)">Pleite! 😬</div>
+    <div style="margin-bottom:1rem;border-radius:10px;overflow:hidden">
+  <div class="tenor-gif-embed" data-postid="4830100195523146323" data-share-method="host" data-aspect-ratio="1" data-width="100%">
+    <a href="https://tenor.com/view/ohnepixel-hobby-gamba-csgo-ohne-gif-4830100195523146323">Ohnepixel Hobby GIF</a>
+  </div>
+</div>
     <div class="mod-sub">Du hast alles verloren.</div>
     <input class="mod-inp" type="text" id="bj-go-name" placeholder="Dein Name (optional)" maxlength="20"/>
     <button class="mod-btn" onclick="bjSaveAndRestart()">Eintragen & neu starten</button>
@@ -881,5 +891,6 @@ bjDeck=bjBuildDeck();bjUpdateDisplay();
   }
 })();
 </script>
+<script type="text/javascript" async src="https://tenor.com/embed.js"></script>
 </body>
 </html>
